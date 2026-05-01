@@ -1,0 +1,177 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background-color: #f4f5f7;
+  color: #172b4d;
+}
+
+#app {
+  padding: 20px;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.kanban-column {
+  background-color: #ebecf0;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 300px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 0 5px;
+}
+
+.column-title {
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #5e6c84;
+}
+
+.column-wip {
+  font-size: 12px;
+  color: #6b778c;
+}
+
+.column-wip.warning {
+  color: #d32f2f;
+  font-weight: 600;
+}
+
+.column-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 50px;
+}
+
+.kanban-card {
+  background-color: #ffffff;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.kanban-card:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.kanban-card.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.kanban-card.disabled:hover {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.card-title {
+  font-size: 14px;
+  margin-bottom: 5px;
+  word-break: break-word;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: #6b778c;
+}
+
+.card-dependencies {
+  margin-top: 5px;
+  font-size: 11px;
+  color: #d32f2f;
+}
+
+.card-dependency-icon {
+  display: inline-block;
+  margin-right: 2px;
+}
+
+.controls {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: #0052cc;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0065ff;
+}
+
+.btn-primary:disabled {
+  background-color: #c1c7d0;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #ebecf0;
+  color: #172b4d;
+}
+
+.btn-secondary:hover {
+  background-color: #dfe1e6;
+}
+
+.status-bar {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  font-size: 13px;
+  color: #5e6c84;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebe6;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.success-message {
+  color: #00875a;
+  background-color: #e3fcef;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 13px;
+}
