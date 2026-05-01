@@ -102,8 +102,21 @@ export function useKanbanBoard(initialConfig = {}) {
     return { allowed: true }
   }
 
+  function isValidColumn(columnId) {
+    return state.columns.some(col => col.id === columnId)
+  }
+
   function addCard(card) {
-    const columnId = card.columnId || 'todo'
+    const columnId = (card.columnId === undefined || card.columnId === null) ? 'todo' : card.columnId
+    
+    if (!isValidColumn(columnId)) {
+      const validColumnIds = state.columns.map(col => col.id).join(', ')
+      return { 
+        allowed: false, 
+        reason: `无效的列 ID: ${columnId}。有效的列 ID 为: ${validColumnIds}` 
+      }
+    }
+
     const columnCards = getCardsByColumn(columnId)
     
     const wipResult = wipLimiter.value.canAddCard(columnId, columnCards.length)

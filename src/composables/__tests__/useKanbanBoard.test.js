@@ -82,6 +82,64 @@ describe('useKanbanBoard', () => {
       expect(result2.allowed).toBe(false)
       expect(result2.reason).toContain('WIP 上限')
     })
+
+    describe('column validation', () => {
+      it('should reject card with invalid columnId', () => {
+        const result = board.addCard({ id: '1', title: 'Invalid Card', columnId: 'non-existent-column' })
+        
+        expect(result.allowed).toBe(false)
+        expect(result.reason).toContain('无效的列 ID')
+        expect(result.reason).toContain('non-existent-column')
+        expect(board.state.cards.length).toBe(0)
+      })
+
+      it('should reject card with empty string columnId', () => {
+        const result = board.addCard({ id: '1', title: 'Invalid Card', columnId: '' })
+        
+        expect(result.allowed).toBe(false)
+        expect(result.reason).toContain('无效的列 ID')
+        expect(board.state.cards.length).toBe(0)
+      })
+
+      it('should reject card with null columnId (but should use default todo instead of null)', () => {
+        const result = board.addCard({ id: '1', title: 'Card', columnId: null })
+        
+        expect(result.allowed).toBe(true)
+        expect(board.getCardById('1').columnId).toBe('todo')
+      })
+
+      it('should reject card with undefined columnId (but should use default todo)', () => {
+        const result = board.addCard({ id: '1', title: 'Card', columnId: undefined })
+        
+        expect(result.allowed).toBe(true)
+        expect(board.getCardById('1').columnId).toBe('todo')
+      })
+
+      it('should accept card with all valid column IDs', () => {
+        const validColumns = ['todo', 'in-progress', 'review', 'done']
+        
+        validColumns.forEach((colId, index) => {
+          const result = board.addCard({ 
+            id: `card-${index}`, 
+            title: `Card in ${colId}`, 
+            columnId: colId 
+          })
+          expect(result.allowed).toBe(true)
+          expect(board.getCardById(`card-${index}`).columnId).toBe(colId)
+        })
+      })
+
+      it('should show valid column IDs in error message', () => {
+        const result = board.addCard({ id: '1', title: 'Invalid Card', columnId: 'invalid' })
+        
+        expect(result.allowed).toBe(false)
+        expect(result.reason).toContain('有效的列 ID 为')
+        expect(result.reason).toContain('todo')
+        expect(result.reason).toContain('in-progress')
+        expect(result.reason).toContain('review')
+        expect(result.reason).toContain('done')
+      })
+    })
   })
 
   describe('removeCard', () => {
